@@ -1,0 +1,27 @@
+#Each line corresponds to a transaction by the customer in a particular month.
+#Name, Month, Transaction Amount
+Arun Mohan, Jan 2018, 23.45
+Strider, Jan 2018, 45.67
+Gandalf, Jan 2018, 34.45
+Frodo, Jan 2018, 54.45
+Arun Mohan, Feb 2018, 23.45
+Strider, Feb 2018, 45.67
+Arun Mohan, Apr 2018, 16.45
+Strider, Apr 2018, 38.69
+Gandalf, Feb 2018, 34.45
+Gandalf, Mar 2018, 24.45
+Frodo, Mar 2018, 36.45
+Arun Mohan, Jan 2018, 89.45
+Frodo, Feb 2018, 54.45
+Arun Mohan, Mar 2018, 23.45
+Strider, Mar 2018, 45.67
+Gandalf, Mar 2018, 34.45
+Frodo, Mar 2018, 54.45
+Arun Mohan, Apr 2018, 23.45
+Strider, Apr 2018, 45.67
+Arun Mohan, Jan 2018, 23.45
+Gandalf, Apr 2018, 34.45
+Frodo, Apr 2018, 54.45
+Arun Mohan, Feb 2018, 23.45
+Strider, Feb 2018, 12.67
+Gandalf, Feb 2018, 78.45
