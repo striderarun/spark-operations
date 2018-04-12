@@ -36,8 +36,61 @@ public class SparkOperations {
         sparkContext.stop();
     }
 
+    public void aggregateCustomerEmailsAndPhoneNumbers() {
+        LOGGER.info("AGGREGATE CUSTOMER EMAILS AND PHONES");
+        SparkConf sparkConf = new SparkConf().setAppName("AGGREGATE_CUSTOMER_DETAILS");
+        JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+        JavaRDD<String> userEmailLines = sparkContext.textFile(emails);
+        JavaRDD<String> userPhoneLines = sparkContext.textFile(phones);
+
+        JavaPairRDD<String, String> userEmails = userEmailLines.mapToPair(s -> {
+            String[] val = s.split(",");
+            return new Tuple2<>(val[0].trim(), val[1].trim());
+        });
+
+        JavaPairRDD<String, String> userPhones = userPhoneLines.mapToPair(s -> {
+            String[] val = s.split(",");
+            return new Tuple2<>(val[0].trim(), val[1].trim());
+        });
+
+        JavaPairRDD<String, Iterable<String>> userEmailGroups = userEmails.groupByKey();
+        JavaPairRDD<String, Iterable<String>> userPhoneGroups = userPhones.groupByKey();
+
+        Map<String, Tuple2<Iterable<String>, Iterable<String>>> userJoinMap = userEmailGroups.join(userPhoneGroups).sortByKey().collectAsMap();
+
+        LOGGER.info(userJoinMap.toString());
+        sparkContext.stop();
+
+    }
+
+    public void coGroupCustomerEmailsAndPhoneNumbers() {
+        System.out.println("CO-GROUP CUSTOMER EMAILS AND PHONES");
+        SparkConf sparkConf = new SparkConf().setAppName("COGROUP_CUSTOMER_DETAILS");
+        JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+        JavaRDD<String> userEmailLines = sparkContext.textFile(emails);
+        JavaRDD<String> userPhoneLines = sparkContext.textFile(phones);
+
+        JavaPairRDD<String, String> userEmails = userEmailLines.mapToPair(s -> {
+            String[] val = s.split(",");
+            return new Tuple2<>(val[0].trim(), val[1].trim());
+        });
+
+        JavaPairRDD<String, String> userPhones = userPhoneLines.mapToPair(s -> {
+            String[] val = s.split(",");
+            return new Tuple2<>(val[0].trim(), val[1].trim());
+        });
+
+        Map<String, Tuple2<Iterable<String>, Iterable<String>>> coGroupMap = userEmails.cogroup(userPhones).sortByKey().collectAsMap();
+
+        LOGGER.info(coGroupMap.toString());
+        sparkContext.stop();
+
+    }
+
     public static void main(String[] args) {
         SparkOperations sparkOperations = new SparkOperations();
         sparkOperations.monthlyCustomerSpend();
+        sparkOperations.aggregateCustomerEmailsAndPhoneNumbers();
+        sparkOperations.coGroupCustomerEmailsAndPhoneNumbers();
     }
 }
