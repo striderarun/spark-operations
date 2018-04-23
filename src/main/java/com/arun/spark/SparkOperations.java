@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Tuple2;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SparkOperations {
 
